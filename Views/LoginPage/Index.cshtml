@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "Login Page";
+    Layout = "_LoginLayout";
+}
+
+<link rel="stylesheet" href="@Url.Content("~/css/site.css")" asp-append-version="true" />
+
+@model ArtSchool.Models.Person;
+
+<link rel="stylesheet" href="~/css/LoginPage.css" />
+
+<div id="mainbody"class="text-center black_bg py-3 w-100 text-light"> 
+    <p>Rezervace vybavení pro studenty</p>
+</div>
+
+<!--Modal window for register-->
+<div class="modal fade" id="ModalRegister" tabindex="-1" role="dialog" aria-labelledby="ModalRegisterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Registrace</h4>
+                <button type="button" class="close rounded border-1 bg-white text-dark px-3 py-2 m-1" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--Form implemented with 12 columns method-->
+                <form asp-action="Register" asp-controller="LoginPage" method="post">
+                    <div class="form-group row mb-3">
+                        <label for="name" class="col-sm-4 col-form-label">Křestní jméno:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="Firstname" name="Firstname" asp-for="Firstname" required>
+                            <span asp-validation-for="Firstname" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="surname" class="col-sm-4 col-form-label">Příjmení:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="Surname" name="Surname" asp-for="Surname" required>
+                            <span asp-validation-for="Surname" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="email" class="col-sm-4 col-form-label">Email:</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" id="Reg_Email" name="Email" asp-for="Email" required>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="password" class="col-sm-4 col-form-label">Heslo:</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="Reg_Pwd" name="Pwd" asp-for="Pwd" required>
+                            <span asp-validation-for="Pwd" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group modal-footer">
+                        <button type="button" class="rounded border-0 black_bg text-light p-2" data-dismiss="modal">Zavřít</button>
+                        <button type="submit" class="rounded border-0 blue_bg text-light p-2">Potvrdit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal window for login-->
+<div class="modal fade" id="ModalLogin" tabindex="-1" role="dialog" aria-labelledby="ModalLoginTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Přihlásit se</h4>
+                <button type="button" class="close rounded border-1 bg-white text-dark px-3 py-2 m-1" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Login" asp-controller="LoginPage" method="post">
+                    <div class="form-group row mb-3">
+                        <label for="email" class="col-sm-4 col-form-label">Email:</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" id="Log_Email" name="Email" asp-for="Email" required>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="password" class="col-sm-4 col-form-label">Heslo:</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="Log_Pwd" name="Pwd" asp-for="Pwd" required>
+                            <span asp-validation-for="Pwd" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group modal-footer">
+                        <button type="button" class="rounded border-0 black_bg text-light p-2" data-dismiss="modal">Zavřít</button>
+                        <button type="submit" class="rounded border-0 blue_bg text-light p-2">Potvrdit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

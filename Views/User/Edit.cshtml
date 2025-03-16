@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "EditUser";
+}
+
+<link rel="stylesheet" href="@Url.Content("~/css/site.css")" asp-append-version="true" />
+
+@model ArtSchool.Models.Person
+
+<h1 class="mb-4 text-center">Upravit roli uživatele @ViewData["UserName"]</h1>
+
+<div class="card m-auto" style="width: 22rem; border-radius: 1rem;">
+    <div class="card-body">
+        <p class="card-text">Zde můžete změnit roli uživatele <b>@ViewData["UserName"]</b>. Lze vybrat mezi rolemi student a učitel</p>
+    </div>
+
+    <form asp-action="Edit" method="post" class="p-3">
+        <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+        <input type="hidden" name="Id_User" value="@Model.Id_user" />
+        <label asp-for="User_role" class="form-label"></label>
+        <select class="form-control" asp-for="User_role">
+            @if (ViewData["User"] != null)
+            {
+                <option value="user">student</option>
+                <option value="teacher">učitel</option>
+                <option value="atelier_manager">správce ateliéru</option>
+            }
+            else
+            {
+                <option value="">User is not available</option>
+            }
+        </select>
+        <span asp-validation-for="User_role" class="text-danger"></span>
+        <button type="submit" class="edit btn p-2 my-2">Potvrdit</button>
+    </form>
+
+</div>

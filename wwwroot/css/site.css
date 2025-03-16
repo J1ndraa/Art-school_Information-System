@@ -1,0 +1,114 @@
+@const black: #111111;
+@const blue: #21c1c6;
+@const blue_full: #1fb0b4;
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+a:hover:not(.logospace) {
+    box-shadow: 0 0 1px 1px white;
+    transition: 0.3s;
+}
+
+nav button:hover {
+    box-shadow: 0 0 1px 1px white;
+    transition: 0.3s;
+    background-color: #000;
+}
+
+.btn:focus, .btn:active:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0 white;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.add{
+    background-color: white;
+    color: black;
+}
+
+.add:hover{
+    background-color: aliceblue;
+    transition: 0.3s;
+    color: black;
+}
+
+.edit{
+    background-color : #21c1c6;
+    color:white
+}
+.edit:hover {
+    background-color: #1fa8ab;
+    transition: 0.3s;
+    color: white;
+}
+
+.delete {
+    background-color: #1a1a1a;
+    color: white;
+}
+.delete:hover{
+    background-color: #000;
+    transition: 0.3s;
+    color: white;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.black_bg {
+    background-color: #000;
+}
+
+.black_light_bg {
+    background-color: #0a0a0a;
+}
+
+.blue_bg {
+    background-color: #21c1c6;
+}
+
+/*Positioning for card items***************************************************************************************************/
+
+.equip_unit_v1, .equip_unit_v2, .equip_unit_v3, .equip_unit_v4 {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding-left: 0;
+}
+
+/*only for last li*/
+.equip_unit_v1 li:last-child, .equip_unit_v2 li:last-child, .equip_unit_v3 li:last-child, .equip_unit_v4 li:last-child {
+    text-align: right;
+}
+
+.equip_unit_v1 li {
+    width: 20%;
+}
+
+.equip_unit_v2 li {
+    width: 16.666%;
+}
+
+.equip_unit_v3 li {
+    width: 33.333%;
+}
+
+.equip_unit_v4 li {
+    width: 25%;
+}

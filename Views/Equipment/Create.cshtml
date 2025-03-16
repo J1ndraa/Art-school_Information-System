@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "CreateEquipment";
+}
+
+@model ArtSchool.Models.Equipment
+
+<link rel="stylesheet" href="@Url.Content("~/css/site.css")" asp-append-version="true" />
+
+<h1 class="mb-4 text-center">Přidat zařízení</h1>
+
+<div class="card m-auto" style="width: 22rem; border-radius: 1rem;">
+    <div class="card-body">
+        <h5 class="card-title">Přidat zařízení do ateliéru</h5>
+        <p class="card-text">Zde můžete přidat nové zařízení do ateliéru.</p>
+    </div>
+
+    <form asp-action="Create" method="post">
+        <div class="card-body">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input class="form-control" asp-for="Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DateOfManufacture" class="form-label"></label>
+                <input class="form-control" asp-for="DateOfManufacture" />
+                <span asp-validation-for="DateOfManufacture" class="text-danger"></span>
+            </div>
+
+            <!-- Date of Purchase Field -->
+            <div class="mb-3">
+                <label asp-for="DateOfPurchase" class="form-label"></label>
+                <input class="form-control" asp-for="DateOfPurchase" />
+                <span asp-validation-for="DateOfPurchase" class="text-danger"></span>
+            </div>
+            <!-- Max Loan Duration Field -->
+            <div class="mb-3">
+                <label asp-for="MaxLoanDuration" class="form-label"></label>
+                <input class="form-control" asp-for="MaxLoanDuration" />
+                <span asp-validation-for="MaxLoanDuration" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Id_atelier" class="form-label"></label>
+                <select class="form-control" asp-for="Id_atelier">
+                    <option value="">-- Vyberte ateliér --</option>
+                    @if (ViewData["Ateliers"] != null)
+                    {
+                        var ateliers = (List<Atelier>)ViewData["Ateliers"];
+                        foreach (var atelier in ateliers)
+                        {
+                            <option value="@atelier.Id_atelier">@atelier.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="">No ateliers available</option>
+                    }
+                </select>
+                <span asp-validation-for="Id_atelier" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Id_type" class="form-label"></label>
+                <select class="form-control" asp-for="Id_type">
+                    <option value="">-- Vyberte typ zařízení --</option>
+                    @if (ViewData["EquipmentTypes"] != null)
+                    {
+                        var equipmentTypes = (List<EquipmentType>)ViewData["EquipmentTypes"];
+                        foreach (var equipmentType in equipmentTypes)
+                        {
+                            <option value="@equipmentType.Id_type">@equipmentType.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="">No equipment types available</option>
+                    }
+                </select>
+                <span asp-validation-for="Id_type" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="card-body d-flex justify-content-center align-items-center">
+            <button type="submit" class="edit btn">Přidat zařízení</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

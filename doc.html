@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0064)https://www.fit.vut.cz/study/course/IIS/private/projekt/doc.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Projekt IIS</title>
+    <style type="text/css">
+    	table { border-collapse: collapse; }
+    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+    	dt { font-weight: bold; margin-top: 0.5em; }
+    </style>
+<link id="chromealerabat-link" rel="stylesheet" type="text/css" href="chrome-extension://pcajbjcmckcjacdpgmpadhmnpllndknb/content.css"></head>
+<body>
+
+<h1>Umělecká škola</h1>
+
+<dl>
+	<dt>Autoři</dt>
+	<dd>
+		Marek Čupr
+	    	<a href="mailto:xcuprm01@stud.fit.vutbr.cz">xcuprm01@stud.fit.vutbr.cz</a>
+		- dokumentace, převážně implementace logiky spojené s učitelem a uživatelem, analýza a návrh informačního systému.
+	</dd>
+	<dd>
+		Jindřich Halva
+		<a href="mailto:xhalva05@stud.fit.vutbr.cz">xhalva05@stud.fit.vutbr.cz</a>
+		- napojení databáze, převážně implementace logiky spojené s administrátorem a správcem ateliéru, analýza a návrh informačního systému.
+	</dd>
+</dl>
+
+<h2>Implementace</h2>
+<p>Projekt je implementován pomocí <strong>ASP.NET Core 8.0</strong> v jazyce C#. Hlavní části implementace zahrnují:</p>
+<ul>
+    <li><strong>Controllers:</strong> API pro správu uživatelů, zařízení, rezervací a výpůjček. Obsahuje autentifikaci a autorizaci pomocí <code>Cookies</code> a role-based přístupu.</li> 
+    <li><strong>Models:</strong> Datové modely pro uživatele, zařízení a rezervace s validací pomocí <code>DataAnnotations</code> pro zajištění správnosti dat.</li>
+    <li><strong>Views:</strong> Frontend vytvořený pomocí <strong>Razor Views</strong> v rámci <strong>MVC architektury</strong>, s integrací <strong>Bootstrapu</strong> pro responzivní design.</li>
+</ul>
+
+<h3>Databáze</h3>
+<img src="ER.png" alt="Grafické schéma databáze" />
+
+<h2>Instalace</h2>
+<ul>
+<li><strong>Instalace na server:</strong>
+        <ul>
+	    <li>Stáhněte a nainstalujte .NET SDK 8.0.</li>
+	    <li>Nainstalujte SQL Server a vytvořte novou databázi.</li>
+	    <li>Upravte připojovací řetězec v souboru <code>appsettings.json</code> pro připojení k databázi.</li>
+	    <li>Spusťte migrace pro vytvoření tabulek v databázi: <code>dotnet ef database update</code>.</li>
+	    <li>Publikujte aplikaci pomocí příkazu <code>dotnet publish</code> a přeneste ji na server.</li>
+	    <li>Na webovém serveru nakonfigurujte směrování aplikace a zaručte správné spuštění.</li>
+        </ul>
+</li>
+<li><strong>Softwarové požadavky:</strong>
+        <ul>
+            <li>.NET SDK 8.0</li>
+            <li>SQL Server</li>
+            <li>Webový server pro hostování aplikace</li>
+            <li>Visual Studio</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Známé problémy</h2>
+<ul>
+	<li>Učitelé nemohou přímo zakázat vypůjčení zařízení. Lze to však obejít tím, že si zařízení sami zarezervují.</li>
+</ul>
+
+</body></html>

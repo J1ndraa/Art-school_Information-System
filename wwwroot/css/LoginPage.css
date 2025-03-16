@@ -1,0 +1,35 @@
+﻿#mainbody {
+    opacity:0.85;
+}
+
+p {
+    font-size: 25px;
+    color: white;
+    font-weight: lighter;
+    margin-bottom: 0px;
+}
+
+#mainbody:hover {
+    opacity: 1;
+    transition: 1s;
+}
+
+#ModalRegister .form-control {
+    background-color: white;
+    color: black;
+}
+
+#ModalLogin .form-control {
+    background-color: white;
+    color: black;
+}
+
+#ModalRegister .btn {
+    background-color: black; 
+    color: white;
+}
+
+#ModalLogin .btn {
+    background-color: black;
+    color: white;
+}

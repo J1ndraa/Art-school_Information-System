@@ -1,0 +1,75 @@
+﻿@{
+	ViewData["Title"] = "AtelierDetails";
+	Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="@Url.Content("~/css/site.css")" asp-append-version="true" />
+
+<div class="container">
+	<div class="card mb-5">
+		<button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+			<div class="card-header" id="AtelierUsersHeader">
+				<h4 class="mb-0">
+
+					Uživatelé ateliéru <b>@ViewData["AtelierName"]</b>
+				</h4>
+			</div>
+		</button>
+		<div id="collapseOne" class="collapse show" aria-labelledby="AtelierUsersHeader" data-parent="#accordion">
+			<div>
+				<a asp-controller="AtelierUsers" asp-action="Index" asp-route-atelier_id="@ViewData["AtelierId"]"
+				   asp-route-returnUrl="@Context.Request.Path" class="card-link btn my-1 mx-3 border">
+					Přidat uživatele
+				</a>
+			</div>
+			<div class="card-body">
+				<ul class="list-group" style="list-style:none">
+					<li class="list-group-item" style="background-color:aliceblue">
+						<ul class="equip_unit_v1">
+							<li><strong>id</strong></li>
+							<li><strong>Jméno</strong></li>
+							<li><strong>Příjmení</strong></li>
+							<li><strong>Role</strong></li>
+							<li><strong></strong></li>
+						</ul>
+					</li>
+					@foreach (var user in (IEnumerable<ArtSchool.Models.AtelierPersons>)ViewData["Users"])
+					{
+						@if (user.Person.User_role != "atelier_manager")
+						{
+						<li class="list-group-item">
+							<ul class="equip_unit_v1">
+								<li><strong>@user.Person.Id_user</strong></li>
+								<li><strong>@user.Person.Firstname</strong></li>
+								<li>@user.Person.Surname</li>
+								@if(user.Person.User_role == "user")
+								{
+									<li>student</li>
+								}
+								@if(user.Person.User_role == "teacher")
+								{
+									<li>učitel</li>
+								}
+								<li>
+									<a asp-controller="AtelierUsers" asp-action="Edit" asp-route-Id_User="@user.Id_user"
+										asp-route-returnUrl="@Context.Request.Path" class="edit btn rounded border-0 text-light p-2 m-1">
+										<img src="~/images/edit_icon.png" alt="Edit" width="16" />
+									</a>
+									<form method="post" asp-action="Delete" asp-controller="AtelierUsers" style="display: inline;">
+										<input type="hidden" name="Id_User" value="@user.Id_user" />
+										<input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+										<button type="submit" class="delete rounded border-0 text-light p-2 m-1"
+												onclick="return confirm('Opravdu chcete tohoto uživatele odstranit z ateliéru? Tato akce je nevratná a vymažete tím i případné rezervace daného uživatele v tomto ateliéru.')">
+											<img src="~/images/tresh_icon.png" alt="Tresh" width="16" />
+										</button>
+									</form>
+								</li>
+							</ul>
+						</li>
+						}
+					}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

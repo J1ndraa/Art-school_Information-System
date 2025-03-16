@@ -1,0 +1,265 @@
+﻿@{
+    ViewData["Title"] = "Teacher Page";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="@Url.Content("~/css/site.css")" asp-append-version="true" />
+
+<!--Show all equipment user can make reservation on-->
+<div id="accordion" class="container">
+
+	<div class="card mb-5">
+		<button class="btn" data-toggle="collapse" data-target="#collapseRes" aria-expanded="true" aria-controls="collapseRes">
+			<div class="card-header" id="ResRequestHeader">
+				<h4 class="mb-0">
+					Žádosti o rezervace
+				</h4>
+			</div>
+		</button>
+		<div id="collapseRes" class="collapse show" aria-labelledby="ResRequestHeader" data-parent="#accordion">
+			<div class="card-body">
+				<ul class="list-group" style="list-style:none;">
+					<li class="list-group-item" style="background-color:aliceblue">
+						<ul class="equip_unit_v2">
+							<li><strong>id rez.</strong></li>
+							<li><strong>příjmení</strong></li>
+							<li><strong>zařízení</strong></li>
+							<li><strong>začátek</strong></li>
+							<li><strong>konec</strong></li>
+							<li></li>
+						</ul>
+					</li>
+					@foreach (var request in (IEnumerable<ArtSchool.Models.Reservation>)ViewData["ReservationRequests"])
+					{
+						<li class="list-group-item">
+							<ul class="equip_unit_v2">
+								<li><strong>@request.Id_reservation</strong></li>
+								<li>@request.Person.Surname</li>
+								<li>@request.Equipment.Name</li>
+								<li>@request.DateOfReservation</li>
+								<li>@request.DateOfEnd</li>
+								<li>
+									<form asp-controller="Reservation" asp-action="Accept" asp-route-id="@request.Id_reservation" method="post" class="d-inline">
+										<button type="submit" class="edit btn p-2 m-1">
+											<img src="~/images/check_icon.png" alt="Check" width="16" />
+										</button>
+									</form>
+									<form method="post" asp-action="Delete" asp-controller="Reservation" asp-route-id="@request.Id_reservation" style="display: inline;">
+										<button type="submit" class="delete btn p-2 m-1" onclick="return confirm('Opravdu chcete tuto rezervaci kompletně odebrat ze systému?')">
+											<img src="~/images/tresh_icon.png" alt="Tresh" width="16" />
+										</button>
+									</form>
+								</li>
+							</ul>
+						</li>
+					}
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="card mb-5">
+		<button class="btn" data-toggle="collapse" data-target="#collapseLoan" aria-expanded="true" aria-controls="collapseLoan">
+			<div class="card-header" id="LoanHeader">
+				<h4 class="mb-0">
+					Výpujčky uživatelů
+				</h4>
+			</div>
+		</button>
+		<div id="collapseLoan" class="collapse show" aria-labelledby="LoanHeader" data-parent="#accordion">
+			<div class="card-body">
+				<ul class="list-group" style="list-style:none">
+					<li class="list-group-item" style="background-color:aliceblue">
+						<ul class="equip_unit_v2">
+							<li><strong>id</strong></li>
+							<li><strong>stav</strong></li>
+							<li><strong>uživatel</strong></li>
+							<li><strong>zařízení</strong></li>
+							<li><strong>půjčení</strong></li>
+							<li><strong>návrat</strong></li>
+						</ul>
+					</li>
+					@foreach (var loan in (IEnumerable<ArtSchool.Models.Loan>)ViewData["AtelierLoans"])
+					{
+						<li class="list-group-item">
+							<ul class="equip_unit_v2">
+								<li><strong>@loan.Id_loan</strong></li>
+								@if (loan.Status == "active")
+								{
+									<li style="color: aqua">AKTIVNÍ</li>
+								}
+								@if (loan.Status == "returned")
+								{
+									<li style="color: greenyellow">VRÁCENO</li>
+								}
+								@if (loan.Status == "overdue")
+								{
+									<li style="color: darkred">PO TERMÍNU</li>
+								}
+								<li>@loan.Person.Surname @loan.Person.Firstname</li>
+								<li><strong>@loan.Equipment.Name</strong></li>
+								<li>@loan.DateOfLoan</li>
+								<li>
+									@loan.DateOfReturn 
+									<form method="post" asp-action="Return" asp-controller="Loan" style="display: inline;">
+										<input type="hidden" name="id" value="@loan.Id_loan" />
+										<input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+										<button type="submit" class="edit btn p-2 m-1"
+												onclick="return confirm('Zařízení bylo navráceno? Tímto potvrdíte návrat a výpujčka bude ze systému vymazána.')">
+											Navrácení
+										</button>
+									</form>
+								</li>
+							</ul>
+						</li>
+					}
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="card mb-5">
+		<button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+			<div class="card-header" id="EquipHeader">
+				<h4 class="mb-0">
+					Zařízení
+				</h4>
+			</div>
+		</button>
+		<div id="collapseOne" class="collapse show" aria-labelledby="EquipHeader" data-parent="#accordion">
+			<div>
+				<a asp-controller="Equipment" asp-action="Create" class="add card-link btn my-1 mx-3 border">
+					Přidat zařízení
+				</a>
+			</div>
+			<div class="card-body">
+				<ul class="list-group" style="list-style:none;">
+					<li class="list-group-item" style="background-color:aliceblue">
+						<ul class="equip_unit_v2">
+							<li><strong>Název</strong></li>
+							<li><strong>id</strong></li>
+							<li><strong>typ</strong></li>
+							<li><strong>atelier</strong></li>
+							<li></li>
+							<li></li>
+						</ul>
+					</li>
+					@foreach (var equipment in (IEnumerable<ArtSchool.Models.Equipment>)ViewData["Equipments"])
+					{
+						<li class="list-group-item">
+							<ul class="equip_unit_v2">
+								<li><strong>@equipment.Name</strong></li>
+								<li>@equipment.Id_equipment</li>
+								<li>@equipment.EquipmentType.Name</li>
+								<li>@equipment.Atelier.Name</li>
+								<li><a asp-controller="Reservation" asp-action="Index" asp-route-id="@equipment.Id_equipment" class="edit btn p-2 m-1">Rezervace</a></li>
+								<li>
+									<a class="edit btn p-2 m-1" asp-action="Edit" asp-controller="Equipment" asp-route-id="@equipment.Id_equipment">
+										<img src="~/images/edit_icon.png" alt="Edit" width="16"/>
+									</a>
+									<form method="post" asp-action="Delete" asp-controller="Equipment" asp-route-id="@equipment.Id_equipment" style="display: inline;">
+										<button type="submit" class="rounded border-0 black_bg text-light p-2 m-1"
+												onclick="return confirm('Opravdu chcete toto zařízení kompletně odstranit ze systému?')">
+											<img src="~/images/tresh_icon.png" alt="Tresh" width="16" />
+										</button>
+									</form>
+								</li>
+							</ul>
+						</li>
+					}
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!--Show every user Loan-->
+	<div class="card mb-5">
+		<button class="btn" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+			<div class="card-header" id="LoanHeader">
+				<h4 class="mb-0">
+					Výpujčky
+				</h4>
+			</div>
+		</button>
+		<div id="collapseTwo" class="collapse show" aria-labelledby="LoanHeader" data-parent="#accordion">
+			<div class="card-body">
+				<ul class="list-group" style="list-style:none">
+					<li class="list-group-item" style="background-color:aliceblue">
+						<ul class="equip_unit_v1">
+							<li><strong>id</strong></li>
+							<li><strong>stav</strong></li>
+							<li><strong>zařízení</strong></li>
+							<li><strong>půjčení</strong></li>
+							<li><strong>návrat</strong></li>
+						</ul>
+					</li>
+					@foreach (var loan in (IEnumerable<ArtSchool.Models.Loan>)ViewData["Loans"])
+					{
+						<li class="list-group-item">
+							<ul class="equip_unit_v1">
+								<li><strong>@loan.Id_loan</strong></li>
+								@if (loan.Status == "active")
+								{
+									<li style="color: aqua">AKTIVNÍ</li>
+								}
+								@if (loan.Status == "returned")
+								{
+									<li style="color: greenyellow">VRÁCENO</li>
+								}
+								@if (loan.Status == "overdue")
+								{
+									<li style="color: darkred">PO TERMÍNU</li>
+								}
+								<li><strong>@loan.Equipment.Name</strong></li>
+								<li>@loan.DateOfLoan</li>
+								<li>@loan.DateOfReturn</li>
+							</ul>
+						</li>
+					}
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!--Show reservation requests-->
+	<div class="card mb-5">
+		<button class="btn" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+			<div class="card-header" id="ResHeader">
+				<h4 class="mb-0">
+					Rezervace
+				</h4>
+			</div>
+		</button>
+		<div id="collapseThree" class="collapse show" aria-labelledby="ResHeader" data-parent="#accordion">
+			<div class="card-body">
+				<ul class="list-group" style="list-style:none;">
+					<li class="list-group-item" style="background-color:aliceblue">
+						<ul class="equip_unit_v1">
+							<li><strong>id</strong></li>
+							<li><strong>zařízení</strong></li>
+							<li><strong>začátek</strong></li>
+							<li><strong>konec</strong></li>
+							<li></li>
+						</ul>
+					</li>
+					@foreach (var reservation in (IEnumerable<ArtSchool.Models.Reservation>)ViewData["Reservations"])
+					{
+						<li class="list-group-item">
+							<ul class="equip_unit_v1">
+								<li><strong>@reservation.Id_reservation</strong></li>
+								<li><strong>@reservation.Equipment.Name</strong></li>
+								<li>@reservation.DateOfReservation</li>
+								<li>@reservation.DateOfEnd</li>
+								<li>
+									<form method="post" asp-action="Delete" asp-controller="Reservation" asp-route-id="@reservation.Id_reservation" style="display: inline;">
+										<button type="submit" class="rounded border-0 black_bg text-light p-2 m-1" onclick="return confirm('Opravdu chcete tuto rezervaci kompletně odebrat ze systému?')">Odebrat</button>
+									</form>
+								</li>
+							</ul>
+						</li>
+					}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

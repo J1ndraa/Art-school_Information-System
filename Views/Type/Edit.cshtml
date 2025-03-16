@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "EditType";
+}
+
+<link rel="stylesheet" href="@Url.Content("~/css/site.css")" asp-append-version="true" />
+
+@model ArtSchool.Models.EquipmentType
+
+<h1 class="mb-4 text-center">Upravit typ zařízení</h1>
+
+<div class="card m-auto" style="width: 22rem; border-radius: 1rem;">
+    <div class="card-body">
+        <p class="card-text">Zde můžete přejmenovat typ zařízení.</p>
+    </div>
+
+    <form asp-action="Edit" method="post" class="p-3">
+        <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+        <input type="hidden" asp-for="Id_type" />
+        <div class="form-group">
+            <label for="Name">Název typu zařízení</label>
+            <input asp-for="Name" class="form-control" id="Name" placeholder="Zadejte název">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <button type="submit" class="edit btn p-2">Potvrdit</button>
+    </form>
+
+</div>
